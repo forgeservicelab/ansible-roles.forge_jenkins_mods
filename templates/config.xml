@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson>
+  <disabledAdministrativeMonitors/>
+  <version>1.564</version>
+  <numExecutors>2</numExecutors>
+  <mode>NORMAL</mode>
+  <useSecurity>true</useSecurity>
+  <authorizationStrategy class="hudson.security.GlobalMatrixAuthorizationStrategy">
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Create:digile</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Delete:digile</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains:digile</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Update:digile</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.View:digile</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.View:druid</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.View:kainuunetu</permission>
+    <permission>hudson.model.Computer.Build:digile</permission>
+    <permission>hudson.model.Computer.Build:druid</permission>
+    <permission>hudson.model.Computer.Build:kainuunetu</permission>
+    <permission>hudson.model.Computer.Configure:digile</permission>
+    <permission>hudson.model.Computer.Configure:druid</permission>
+    <permission>hudson.model.Computer.Configure:kainuunetu</permission>
+    <permission>hudson.model.Computer.Connect:digile</permission>
+    <permission>hudson.model.Computer.Connect:druid</permission>
+    <permission>hudson.model.Computer.Connect:kainuunetu</permission>
+    <permission>hudson.model.Computer.Create:digile</permission>
+    <permission>hudson.model.Computer.Create:druid</permission>
+    <permission>hudson.model.Computer.Create:kainuunetu</permission>
+    <permission>hudson.model.Computer.Delete:digile</permission>
+    <permission>hudson.model.Computer.Delete:druid</permission>
+    <permission>hudson.model.Computer.Delete:kainuunetu</permission>
+    <permission>hudson.model.Computer.Disconnect:digile</permission>
+    <permission>hudson.model.Computer.Disconnect:druid</permission>
+    <permission>hudson.model.Computer.Disconnect:kainuunetu</permission>
+    <permission>hudson.model.Hudson.Administer:digile</permission>
+    <permission>hudson.model.Hudson.ConfigureUpdateCenter:digile</permission>
+    <permission>hudson.model.Hudson.Read:anonymous</permission>
+    <permission>hudson.model.Hudson.Read:digile</permission>
+    <permission>hudson.model.Hudson.Read:druid</permission>
+    <permission>hudson.model.Hudson.Read:kainuunetu</permission>
+    <permission>hudson.model.Hudson.RunScripts:digile</permission>
+    <permission>hudson.model.Hudson.RunScripts:druid</permission>
+    <permission>hudson.model.Hudson.RunScripts:kainuunetu</permission>
+    <permission>hudson.model.Hudson.UploadPlugins:digile</permission>
+    <permission>hudson.model.Hudson.UploadPlugins:druid</permission>
+    <permission>hudson.model.Hudson.UploadPlugins:kainuunetu</permission>
+    <permission>hudson.model.Item.Build:digile</permission>
+    <permission>hudson.model.Item.Build:druid</permission>
+    <permission>hudson.model.Item.Build:kainuunetu</permission>
+    <permission>hudson.model.Item.Cancel:digile</permission>
+    <permission>hudson.model.Item.Cancel:druid</permission>
+    <permission>hudson.model.Item.Cancel:kainuunetu</permission>
+    <permission>hudson.model.Item.Configure:digile</permission>
+    <permission>hudson.model.Item.Configure:druid</permission>
+    <permission>hudson.model.Item.Configure:kainuunetu</permission>
+    <permission>hudson.model.Item.Create:digile</permission>
+    <permission>hudson.model.Item.Create:druid</permission>
+    <permission>hudson.model.Item.Create:kainuunetu</permission>
+    <permission>hudson.model.Item.Delete:digile</permission>
+    <permission>hudson.model.Item.Delete:druid</permission>
+    <permission>hudson.model.Item.Delete:kainuunetu</permission>
+    <permission>hudson.model.Item.Discover:digile</permission>
+    <permission>hudson.model.Item.Discover:druid</permission>
+    <permission>hudson.model.Item.Discover:kainuunetu</permission>
+    <permission>hudson.model.Item.Read:anonymous</permission>
+    <permission>hudson.model.Item.Read:digile</permission>
+    <permission>hudson.model.Item.Read:druid</permission>
+    <permission>hudson.model.Item.Read:kainuunetu</permission>
+    <permission>hudson.model.Item.Workspace:digile</permission>
+    <permission>hudson.model.Item.Workspace:druid</permission>
+    <permission>hudson.model.Item.Workspace:kainuunetu</permission>
+    <permission>hudson.model.Run.Delete:digile</permission>
+    <permission>hudson.model.Run.Delete:druid</permission>
+    <permission>hudson.model.Run.Delete:kainuunetu</permission>
+    <permission>hudson.model.Run.Update:digile</permission>
+    <permission>hudson.model.Run.Update:druid</permission>
+    <permission>hudson.model.Run.Update:kainuunetu</permission>
+    <permission>hudson.model.View.Configure:digile</permission>
+    <permission>hudson.model.View.Configure:druid</permission>
+    <permission>hudson.model.View.Configure:kainuunetu</permission>
+    <permission>hudson.model.View.Create:digile</permission>
+    <permission>hudson.model.View.Create:druid</permission>
+    <permission>hudson.model.View.Create:kainuunetu</permission>
+    <permission>hudson.model.View.Delete:digile</permission>
+    <permission>hudson.model.View.Delete:druid</permission>
+    <permission>hudson.model.View.Delete:kainuunetu</permission>
+    <permission>hudson.model.View.Read:anonymous</permission>
+    <permission>hudson.model.View.Read:digile</permission>
+    <permission>hudson.model.View.Read:druid</permission>
+    <permission>hudson.model.View.Read:kainuunetu</permission>
+  </authorizationStrategy>
+  <securityRealm class="hudson.security.LDAPSecurityRealm" plugin="ldap@1.9">
+    <server>ldaps://193.166.24.115</server>
+    <rootDN>dc=forgeservicelab,dc=fi</rootDN>
+    <inhibitInferRootDN>false</inhibitInferRootDN>
+    <userSearchBase>ou=people</userSearchBase>
+    <userSearch>(&amp;(cn={0})(|(memberof=ou=digile,ou=groups,dc=forgeservicelab,dc=fi)(memberof=ou=druid,ou=groups,dc=forgeservicelab,dc=fi)(memberof=ou=kainuunetu,ou=groups,dc=forgeservicelab,dc=fi)))</userSearch>
+    <groupSearchBase>ou=groups</groupSearchBase>
+    <managerDN>cn=authenticator,ou=services,dc=forgeservicelab,dc=fi</managerDN>
+    <managerPasswordSecret>{{ forge_jenkins_mods_ldap_secret }}</managerPasswordSecret>
+    <disableMailAddressResolver>false</disableMailAddressResolver>
+    <cache>
+      <size>20</size>
+      <ttl>300</ttl>
+    </cache>
+    <displayNameAttributeName>displayName</displayNameAttributeName>
+    <mailAddressAttributeName>mail</mailAddressAttributeName>
+  </securityRealm>
+  <disableRememberMe>false</disableRememberMe>
+  <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
+  <workspaceDir>${ITEM_ROOTDIR}/workspace</workspaceDir>
+  <buildsDir>${ITEM_ROOTDIR}/builds</buildsDir>
+  <markupFormatter class="hudson.markup.EscapedMarkupFormatter"/>
+  <jdks/>
+  <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
+  <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
+  <clouds/>
+  <slaves/>
+  <quietPeriod>5</quietPeriod>
+  <scmCheckoutRetryCount>0</scmCheckoutRetryCount>
+  <views>
+    <hudson.model.AllView>
+      <owner class="hudson" reference="../../.."/>
+      <name>All</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+    </hudson.model.AllView>
+  </views>
+  <primaryView>All</primaryView>
+  <slaveAgentPort>0</slaveAgentPort>
+  <label></label>
+  <nodeProperties/>
+  <globalNodeProperties/>
+  <noUsageStatistics>true</noUsageStatistics>
+</hudson>

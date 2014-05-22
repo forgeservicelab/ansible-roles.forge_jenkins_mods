@@ -1,0 +1,19 @@
+---
+- template:
+    src: config.xml
+    dest: /var/lib/jenkins/config.xml
+    owner: jenkins
+    group: jenkins
+    mode: 0644
+  notify:
+    - jenkins restart
+
+- lineinfile:
+    dest: /etc/nginx/sites-enabled/jenkins.conf
+    regexp: "#ARBITRARY_STUFF"
+    line: |
+      location ~ ^/(css|js|img|fonts)/ {
+        root /var/www/;
+      }
+  notify:
+    - nginx reload
