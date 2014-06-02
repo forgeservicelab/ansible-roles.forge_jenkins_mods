@@ -17,3 +17,35 @@
       }
   notify:
     - nginx reload
+
+- copy:
+    src: SimpleTheme.cfg
+    dest: /var/lib/jenkins/org.codefirst.SimpleThemeDecorator.xml
+    owner: jenkins
+    group: jenkins
+    mode: 0644
+
+- copy:
+    src: forge.{{ item }}
+    dest: /var/www/{{ item }}/
+  with_items:
+    - js
+    - css
+
+- copy:
+    src: "{{ item }}"
+    dest: /var/www/img/
+  with_items:
+    - box.png
+    - logo.png
+    - search.png
+    - Serrated_top.png
+    - Serrated_bottom.png
+    - FORGE_favicon.ico
+
+- unarchive:
+    src: "{{ item }}"
+    dest: /var/www/fonts/
+  with_items:
+    - font-awesome-4.1.0.zip
+    - 170413.zip

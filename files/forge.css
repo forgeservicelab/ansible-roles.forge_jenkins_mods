@@ -1,0 +1,111 @@
+@import url('/fonts/font-awesome-4.1.0/css/font-awesome.min.css');
+
+body, table, form, input, td, th, p, textarea, select {
+  font-family: 'Gotham Narrow SSm A', 'Gotham Narrow SSm B';
+  font-weight: 400;
+  font-style: normal;
+}
+
+h1 {
+  font-weight: 700;
+}
+
+body {
+  background: url('/img/Serrated_top.png') repeat-x;
+  background-size: 500px;
+  padding-top: 15px;
+}
+
+a {
+  color: #1090d0 !important;
+}
+
+table {
+  border-spacing: 0;
+}
+
+#search-box {
+  background: white url('/img/search.png') no-repeat 2px center;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+#top-panel {
+  height: 100px;
+  background: url('/img/box.png') no-repeat;
+  background-size: 100px;
+  background-position: 0 15px;
+}
+
+#top-panel>table {
+  height: 100px;
+}
+
+#top-panel>table>tbody>tr>td:nth-child(1) {
+  vertical-align: middle;
+  padding-left: 125px;
+}
+
+#login-field A {
+  color: black !important;
+}
+
+#main-table {
+  background-image: url('/img/logo.png') !important;
+  background-size: 175px;
+  background-position: bottom -120px left 102px !important;
+}
+
+#footer {
+  border-top: none;
+  background-image: url('/img/Serrated_bottom.png');
+  background-color: black;
+  background-repeat: repeat-x;
+  background-size: 500px;
+}
+
+.error {
+  background-image: none;
+}
+
+@-webkit-keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+@-moz-keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+.fa-blink {
+-webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+    
+    -webkit-animation-direction: normal;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: blink;
+    -webkit-animation-timing-function: ease-in-out;
+    
+-moz-animation-direction: normal;
+    -moz-animation-duration: 2s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-name: blink;
+    -moz-animation-timing-function: ease-in-out;    
+}
