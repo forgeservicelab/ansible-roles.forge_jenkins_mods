@@ -1,22 +1,22 @@
 ---
-- template:
-    src: config.xml
-    dest: /var/lib/jenkins/config.xml
-    owner: jenkins
-    group: jenkins
-    mode: 0644
-  notify:
-    - jenkins restart
+#- template:
+#    src: config.xml
+#    dest: /var/lib/jenkins/config.xml
+#    owner: jenkins
+#    group: jenkins
+#    mode: 0644
+#  notify:
+#    - jenkins restart
 
-- lineinfile:
-    dest: /etc/nginx/sites-enabled/jenkins.conf
-    regexp: "#ARBITRARY_STUFF"
-    line: |
-      location ~ ^/(css|js|img|fonts)/ {
-        root /var/www/;
-      }
-  notify:
-    - nginx reload
+#- lineinfile:
+#    dest: /etc/nginx/sites-enabled/jenkins.conf
+#    regexp: "#ARBITRARY_STUFF"
+#    line: |
+#      location ~ ^/(css|js|img|fonts)/ {
+#        root /var/www/;
+#      }
+#  notify:
+#    - nginx reload
 
 - copy:
     src: SimpleTheme.cfg
@@ -49,3 +49,9 @@
   with_items:
     - font-awesome-4.1.0.zip
     - 170413.zip
+
+- unarchive:
+    src: Drupal_cs.tgz
+    dest: /usr/share/php/PHP/CodeSniffer/Standards/
+    owner: root
+    group: root

@@ -39,40 +39,48 @@ function replaceImage(element, clazz, color) {
 }
 
 function replaceImageWithStack(element, bottomClazz, topClazz, overlayColor) {
+  var stack = document.createElement('span');
   var bottom = document.createElement('i');
   var top = document.createElement('i');
 
-  switch (Q(element).height()) {
+  switch (Q(element).height() || element.height) {
     case 16:
-      element.parentNode.addClassName('fa-stack fa-lg');
-      Q(element.parentNode).height('18px');
-      Q(element.parentNode).width('18px');
+      stack.addClassName('fa-stack fa-lg');
+      Q(stack).height('18px');
+      Q(stack).width('18px');
       break;
     case 24:
-      element.parentNode.addClassName('fa-stack');
-      Q(element.parentNode).height('26px');
-      Q(element.parentNode).width('26px');
+      stack.addClassName('fa-stack fa-2x');
+      Q(stack).height('26px');
+      Q(stack).width('26px');
       break;
     case 32:
-      element.parentNode.addClassName('fa-stack fa-3x');
-      Q(element.parentNode).height('34px');
-      Q(element.parentNode).width('34px');
+      stack.addClassName('fa-stack fa-3x');
+      Q(stack).height('34px');
+      Q(stack).width('34px');
       break;
     case 48:
-      element.parentNode.addClassName('fa-stack fa-4x');
-      Q(element.parentNode).height('50px');
-      Q(element.parentNode).width('50px');
+      stack.addClassName('fa-stack fa-4x');
+      Q(stack).height('50px');
+      Q(stack).width('50px');
       break;
   }
-
+//  if (!(Q(element).parent().hasClass('fa-lg') || Q(element).parent().hasClass('fa-3x') || Q(element).parent().hasClass('fa-4x'))) {
+//    bottom.addClassName(bottomClazz + ' fa-stack-2x');
+//  } else {
   bottom.addClassName(bottomClazz + ' fa-stack-1x');
-  bottom.css('cssText','text-align: end');
-  top.addClassName(bottomClazz + ' fa-stack-1x');
-  top.css('cssText','color: ' +  overlayColor + ' !important');
+//  }
+  Q(bottom).css('cssText','color: black !important');
+  top.addClassName(topClazz + ' fa-stack-1x');
+  Q(top).css('cssText','color: ' +  overlayColor + ' !important; text-align: center;');
 
-  element.parentNode.insertBefore(bottom, element);
-  element.parentNode.insertBefore(top, element);
+  stack.appendChild(bottom);
+  stack.appendChild(top);
+ // element.parentNode.insertBefore(bottom, element);
+  element.parentNode.insertBefore(stack, element);
   element.parentNode.removeChild(element);
+
+  return [top, bottom];
 }
 
 function changeIcons() {
@@ -80,16 +88,19 @@ function changeIcons() {
   allIcons.each(function(index) {
     var item = allIcons[index];
     var source = item.getAttribute('src');
-    if (source.search('(blue|green)\.(png|gif)') > 0) {
+    if (source.search('star.*\.(png|gif)') > 0) {
+      replaceImage(item, 'fa fa-star-o', 'black');
+      return;
+    } else if (source.search('(blue|green)\.(png|gif)') > 0) {
       replaceImage(item, 'fa fa-circle', 'mediumseagreen');
       return;
     } else if (source.search('(blue|green)_anime\.(png|gif)') > 0) {
       replaceImage(item, 'fa fa-circle fa-blink', 'mediumseagreen');
       return;
-    } else if (source.search('(aborted|disabled|grey)\.(png|gif)') > 0) {
+    } else if (source.search('(aborted|disabled|grey|nobuilt)\.(png|gif)') > 0) {
       replaceImage(item, 'fa fa-circle', 'lightslategrey');
       return;
-    } else if (source.search('(aborted|disabled|grey)_anime\.(png|gif)') > 0) {
+    } else if (source.search('(aborted|disabled|grey|nobuilt)_anime\.(png|gif)') > 0) {
       replaceImage(item, 'fa fa-circle fa-blink', 'lightslategrey');
       return;
     } else if (source.search('accept\.(png|gif)') > 0 ) {
@@ -150,7 +161,17 @@ function changeIcons() {
       i = replaceImage(item, 'fa fa-file-text-o');
       return;
     } else if (source.search('document-properties\.(png|gif)') > 0) {
-      replaceImageWithStack(item, 'fa fa-file-o', 'fa fa-wrench', 'black');
+      var stacked = replaceImageWithStack(item, 'fa fa-file-o', 'fa fa-wrench', 'black');
+      Q(stacked[0].parentNode).removeClass('fa-2x');
+      Q(stacked[0]).css('-webkit-transform', 'scale(-1,1)');
+      Q(stacked[0]).css('-moz-transform', 'scale(-1,1)');
+      Q(stacked[0]).css('-ms-transform', 'scale(-1,1)');
+      Q(stacked[0]).css('-o-transform', 'scale(-1,1)');
+      Q(stacked[0]).css('transform', 'scale(-1,1)');
+      Q(stacked[0]).css('top', '10%');
+      Q(stacked[1]).removeClass('fa-stack-1x');
+      Q(stacked[1]).addClass('fa-stack-2x');
+      Q(stacked[1]).css('text-align', 'start');
       return;
     } else if (source.search('domain\.(png|gif)') > 0) {
       i = replaceImage(item, 'fa fa-university');
@@ -196,7 +217,10 @@ function changeIcons() {
       replaceImage(item, 'fa fa-cloud');
       return;
     } else if (source.search('health-60to79\.(png|gif)') > 0) {
-      replaceImageWithStack(item, 'fa fa-sun-o', 'fa-cloud', 'black');
+      var stacked = replaceImageWithStack(item, 'fa fa-sun-o', 'fa fa-cloud', 'black');
+      Q(stacked[0]).css('top', '-25%');
+      Q(stacked[0]).css('left', '35%');
+      Q(stacked[1]).css('top', '-40%');
       return;
     } else if (source.search('health-80plus\.(png|gif)') > 0) {
       replaceImage(item, 'fa fa-sun-o');
@@ -252,6 +276,9 @@ function changeIcons() {
     } else if (source.search('refresh\.(png|gif)') > 0) {
       i = replaceImage(item, 'fa fa-refresh');
       return;
+    } else if (source.search('robot(-large){0,1}\.(png|gif)') > 0) {
+      replaceImage(item, 'fa fa-android');
+      return;
     } else if (source.search('save\.(png|gif)') > 0) {
       replaceImage(item, 'fa fa-save');
       return;
@@ -260,6 +287,25 @@ function changeIcons() {
       return;
     } else if (source.search('search\.(png|gif)') > 0) {
       i = replaceImage(item, 'fa fa-search');
+      return;
+    } else if (source.search('selenium\.(png|gif)') > 0) {
+      stacked = replaceImageWithStack(item, 'fa fa-square-o', 'fa fa-check', 'black');
+      if (stacked[0].parentNode.parentNode.tagName != 'H2') {
+        Q(stacked[0].parentNode).removeClass('fa-2x');
+        Q(stacked[0].parentNode).addClass('fa-lg');
+        Q(stacked[0]).css('top', '-30%');
+        Q(stacked[0]).css('left', '10%');
+        Q(stacked[0]).css('font-size', 'large');
+        Q(stacked[1]).css('font-size', 'x-large');
+      } else {
+        Q(stacked[0].parentNode).height('');
+        Q(stacked[0].parentNode).width('');
+        Q(stacked[0]).css('top', '-20%');
+        Q(stacked[0]).css('left', '15%');
+      }
+      Q(stacked[1]).removeClass('fa-stack-1x');
+      Q(stacked[1]).addClass('fa-stack-2x');
+      Q(stacked[1]).css('text-align', 'start');
       return;
     } else if (source.search('setting\.(png|gif)') > 0) {
       i = replaceImage(item, 'fa fa-sliders');
@@ -312,6 +358,14 @@ MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
 Q( document ).ready(function() {
   Q('link[rel="shortcut icon"]').attr('href','/img/FORGE_favicon.ico');
+  var login = document.createElement('i');
+  Q(login).addClass('fa fa-sign-in');
+  var logout = document.createElement('i');
+  Q(logout).addClass('fa fa-sign-out');
+  Q('a[href^="/login"]').append("&nbsp;");
+  Q('a[href^="/login"]').append(login);
+  Q('a[href="/logout"]').append("&nbsp;");
+  Q('a[href="/logout"]').append(logout);
   var emailInputs = Q("input[name='email.address'");
   emailInputs.each(function(item) {
     emailInputs[item].disabled = true;
