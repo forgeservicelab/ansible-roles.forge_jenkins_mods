@@ -357,6 +357,11 @@ document.head.appendChild(typography);
 MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
 Q( document ).ready(function() {
+  Q("td[id='footer']").each(function (index) {
+    if (index > 0) {
+      Q(this).css('background-image','none');
+    }
+  });
   Q('link[rel="shortcut icon"]').attr('href','/img/FORGE_favicon.ico');
   var login = document.createElement('i');
   Q(login).addClass('fa fa-sign-in');
