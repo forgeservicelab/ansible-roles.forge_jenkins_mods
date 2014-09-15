@@ -65,18 +65,15 @@ function replaceImageWithStack(element, bottomClazz, topClazz, overlayColor) {
       Q(stack).width('50px');
       break;
   }
-//  if (!(Q(element).parent().hasClass('fa-lg') || Q(element).parent().hasClass('fa-3x') || Q(element).parent().hasClass('fa-4x'))) {
-//    bottom.addClassName(bottomClazz + ' fa-stack-2x');
-//  } else {
+
   bottom.addClassName(bottomClazz + ' fa-stack-1x');
-//  }
   Q(bottom).css('cssText','color: black !important');
   top.addClassName(topClazz + ' fa-stack-1x');
   Q(top).css('cssText','color: ' +  overlayColor + ' !important; text-align: center;');
 
   stack.appendChild(bottom);
   stack.appendChild(top);
- // element.parentNode.insertBefore(bottom, element);
+
   element.parentNode.insertBefore(stack, element);
   element.parentNode.removeChild(element);
 
@@ -84,9 +81,8 @@ function replaceImageWithStack(element, bottomClazz, topClazz, overlayColor) {
 }
 
 function changeIcons() {
-  var allIcons = Q('img');
-  allIcons.each(function(index) {
-    var item = allIcons[index];
+  Q('img').each(function() {
+    var item = this;
     var source = item.getAttribute('src');
     if (source.search('star.*\.(png|gif)') > 0) {
       replaceImage(item, 'fa fa-star-o', 'black');
@@ -126,6 +122,9 @@ function changeIcons() {
       return;
     } else if (source.search('attribute\.(png|gif)') > 0) {
       replaceImage(item, 'fa fa-tag');
+      return;
+    } else if (source.search('checkstyle-\\d{2}x\\d{2}\.(png|gif)') > 0) {
+      replaceImage(item, 'fa fa-drupal');
       return;
     } else if (source.search('clipboard\.(png|gif)') > 0) {
       i = replaceImage(item, 'fa fa-clipboard');
@@ -341,10 +340,29 @@ function changeIcons() {
       replaceImage(item, 'fa fa-warning');
     }
   });
-  errorSpans = Q('.error');
-  errorSpans.each(function(index) {
-    var origHTML = errorSpans[index].innerHTML;
-    errorSpans[index].innerHTML = '<i class="fa fa-minus-circle fa-2x"></i> ' + origHTML;
+  Q('.error').each(function(index) {
+    var origHTML = this.innerHTML;
+    this.innerHTML = '<i class="fa fa-minus-circle fa-2x"></i> ' + origHTML;
+  });
+}
+
+function linkId (string) {
+  return string.replace(/(\#)(\d+)/, '<a href="https://support.forgeservicelab.fi/redmine/issues/$2">$1$2</a>');
+}
+
+function linkIssues () {
+  Q("li", Q("ol")).each (function () {
+    this.innerHTML = linkId(this.innerHTML);
+  });
+  Q("pre", Q(".changeset-message")).each (function () {
+    this.innerHTML = linkId(this.innerHTML);
+  });
+}
+
+function linkURLs () {
+  Q('#description').each(function() {
+    var urlRegex = /(https?:\/\/[^\s|<]+)/; 
+    this.innerHTML = this.innerHTML.replace(urlRegex, '<a href="$1">$1</a>');
   });
 }
 
@@ -357,6 +375,18 @@ document.head.appendChild(typography);
 MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
 Q( document ).ready(function() {
+  Q(':checkbox').each(function() {
+    Q(this).addClass('uiswitch');
+  });
+
+  Q(':radio').each(function() {
+    Q(this).addClass('uiswitch');
+  });
+
+  Q('select').each(function() {
+    Q(this).addClass('setting-input');
+  });
+
   Q("td[id='footer']").each(function (index) {
     if (index > 0) {
       Q(this).css('background-image','none');
@@ -371,36 +401,35 @@ Q( document ).ready(function() {
   Q('a[href^="/login"]').append(login);
   Q('a[href="/logout"]').append("&nbsp;");
   Q('a[href="/logout"]').append(logout);
-  var emailInputs = Q("input[name='email.address'");
-  emailInputs.each(function(item) {
-    emailInputs[item].disabled = true;
+  Q("input[name='email.address'").each(function() {
+    this.disabled = true;
   });
 
   changeIcons();
+  linkIssues();
+  linkURLs();
 
   var validationObserver = new MutationObserver(function() {
-    var warningAreas = Q(".warning", ".validation-error-area");
-    var errorAreas = Q(".error", ".validation-error-area"); 
-    warningAreas.each(function(pos) {
-      Q(warningAreas[pos]).css('background-image','none');
-      if (Q(warningAreas[pos]).children()[0].tagName != 'I') {
+    Q(".warning", ".validation-error-area").each(function() {
+      Q(this).css('background-image','none');
+      if (Q(this).children()[0].tagName != 'I') {
         var warningIcon = document.createElement('i');
         warningIcon.addClassName('fa fa-warning');
-        Q(warningAreas[pos]).prepend(warningIcon);
+        Q(this).prepend(warningIcon);
       }
     });
-    errorAreas.each(function(pos) {
-      Q(errorAreas[pos]).css('background-image','none');
-      if (Q(errorAreas[pos]).children()[0].tagName != 'I') {
+    Q(".error", ".validation-error-area").each(function() {
+      Q(this).css('background-image','none');
+      if (Q(this).children()[0].tagName != 'I') {
         var errorIcon = document.createElement('i');
         errorIcon.addClassName('fa fa-minus-circle');
-        Q(errorAreas[pos]).prepend(errorIcon);
+        Q(this).prepend(errorIcon);
       }
     });
   });
 
-  Q('.validation-error-area').each(function( item ) {
-    validationObserver.observe(Q('.validation-error-area')[item], {
+  Q('.validation-error-area').each(function() {
+    validationObserver.observe(this, {
       subtree: true,
       childList: true
     });
@@ -408,7 +437,44 @@ Q( document ).ready(function() {
 
   var queueObserver = new MutationObserver(function() {
     queueIcon = Q('img',('#buildQueue'))[0];
-    execIcon = Q('img',('#executors'))[0];
+    Q('img',('#executors')).each(function() {
+      if (this.src.search('collapse\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-minus');
+      } else if (this.src.search('expand\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-plus');
+      } else if (this.src.search('computer\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-desktop');
+      } else if (this.src.search('stop\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-times-circle');
+      }
+    });
+
+    Q('img',('#buildHistory')).each(function() {
+      if (this.src.search('collapse\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-minus');
+      } else if (this.src.search('expand\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-plus');
+      } else if (this.src.search('stop\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-times-circle');
+      } else if (this.src.search('red\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle', 'crimson');
+      } else if (this.src.search('red_anime\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle fa-blink', 'crimson');
+      } else if (this.src.search('(blue|green)\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle', 'mediumseagreen');
+      } else if (this.src.search('(blue|green)_anime\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle fa-blink', 'mediumseagreen');
+      } else if (this.src.search('(aborted|disabled|grey|nobuilt)\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle', 'lightslategrey');
+      } else if (this.src.search('(aborted|disabled|grey|nobuilt)_anime\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle fa-blink', 'lightslategrey');
+      } else if (this.src.search('yellow\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle', 'gold');
+      } else if (this.src.search('yellow_anime\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle fa-blink', 'gold');
+      }
+    });
+
     if (queueIcon) {
       if (queueIcon.src.search('collapse\.(png|gif)') > 0) {
           replaceImage(queueIcon, 'fa fa-minus');
@@ -416,17 +482,10 @@ Q( document ).ready(function() {
           replaceImage(queueIcon, 'fa fa-plus');
       }
     }
-    if (execIcon) {
-      if (execIcon.src.search('collapse\.(png|gif)') > 0) {
-          replaceImage(execIcon, 'fa fa-minus');
-      } else {
-          replaceImage(execIcon, 'fa fa-plus');
-      }
-    }
   });
 
-  Q('#navigation').each(function(item) {
-    queueObserver.observe(Q('#navigation')[item], {
+  Q('#side-panel-content').each(function() {
+    queueObserver.observe(this, {
       subtree: true,
       childList: true
     });
@@ -435,26 +494,26 @@ Q( document ).ready(function() {
   var breadcrumbObserver = new MutationObserver(function() {
    changeIcons();
   });
-  Q('#breadcrumb-menu-target').each(function(item) {
-    breadcrumbObserver.observe(Q('#breadcrumb-menu-target')[item], {
+  Q('#breadcrumb-menu-target').each(function() {
+    breadcrumbObserver.observe(this, {
       subtree: true,
       childList: true
     });
   });
-  Q('#people').each(function(item) {
-    breadcrumbObserver.observe(Q('#people')[item], {
+  Q('#people').each(function() {
+    breadcrumbObserver.observe(this, {
       subtree: true,
       childList: true
     });
   });
-  Q('#projectStatus').each(function(item) {
-    breadcrumbObserver.observe(Q('#projectStatus')[item], {
+  Q('#projectStatus').each(function() {
+    breadcrumbObserver.observe(this, {
       subtree: true,
       childList: true
     });
   });
-  Q('#trend').each(function(item) {
-    breadcrumbObserver.observe(Q('#trend')[item], {
+  Q('#trend').each(function() {
+    breadcrumbObserver.observe(this, {
       subtree: true,
       childList: true
     });
