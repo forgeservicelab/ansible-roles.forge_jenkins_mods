@@ -365,6 +365,7 @@ function linkIssues () {
   });
   Q("#description").each (function () {
     this.innerHTML = linkId(this.innerHTML);
+  });
 }
 
 function linkURLs () {
@@ -463,6 +464,7 @@ Q( document ).ready(function() {
       } else {
         replaceImage(this, 'fa fa-plus');
       }
+    });
 
     Q('img',('#executors')).each(function() {
       if (this.src.search('collapse\.(png|gif)') > 0) {
@@ -515,6 +517,7 @@ Q( document ).ready(function() {
   var breadcrumbObserver = new MutationObserver(function() {
    changeIcons();
   });
+
   Q('#breadcrumb-menu-target').each(function() {
     breadcrumbObserver.observe(this, {
       subtree: true,
