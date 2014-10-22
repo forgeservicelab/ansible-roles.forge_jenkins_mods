@@ -365,6 +365,12 @@ function linkIssues () {
   });
   Q("#description").each (function () {
     this.innerHTML = linkId(this.innerHTML);
+}
+
+function linkURLs () {
+  Q('#description').each(function() {
+    var urlRegex = /(https?:\/\/[^\s|<]+)/; 
+    this.innerHTML = this.innerHTML.replace(urlRegex, '<a href="$1">$1</a>');
   });
 }
 
@@ -377,6 +383,18 @@ document.head.appendChild(typography);
 MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
 Q( document ).ready(function() {
+  Q(':checkbox').each(function() {
+    Q(this).addClass('uiswitch');
+  });
+
+  Q(':radio').each(function() {
+    Q(this).addClass('uiswitch');
+  });
+
+  Q('select').each(function() {
+    Q(this).addClass('setting-input');
+  });
+
   Q("td[id='footer']").each(function (index) {
     if (index > 0) {
       Q(this).css('background-image','none');
@@ -402,6 +420,7 @@ Q( document ).ready(function() {
 
   changeIcons();
   linkIssues();
+  linkURLs();
 
   var validationObserver = new MutationObserver(function() {
     Q(".warning", ".validation-error-area").each(function() {
@@ -444,27 +463,44 @@ Q( document ).ready(function() {
       } else {
         replaceImage(this, 'fa fa-plus');
       }
-    });
 
-    Q('img',('#executors')).each(function () {
+    Q('img',('#executors')).each(function() {
       if (this.src.search('collapse\.(png|gif)') > 0) {
         replaceImage(this, 'fa fa-minus');
-        return;
+      } else if (this.src.search('expand\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-plus');
       } else if (this.src.search('computer\.(png|gif)') > 0) {
         replaceImage(this, 'fa fa-desktop');
-        return;
-      } else if (this.src.search('computer-flash\.(png|gif)') > 0) {
-        replaceImage(this, 'fa fa-desktop fa-blink');
-        return;
       } else if (this.src.search('computer-x\.(png|gif)') > 0) {
         replaceImageWithStack(this, 'fa fa-desktop', 'fa fa-times', 'red');
-        return;
       } else if (this.src.search('stop\.(png|gif)') > 0) {
         replaceImage(this, 'fa fa-times-circle');
-        return;
-      } else {
+      }
+    });
+
+    Q('img',('#buildHistory')).each(function() {
+      if (this.src.search('collapse\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-minus');
+      } else if (this.src.search('expand\.(png|gif)') > 0) {
         replaceImage(this, 'fa fa-plus');
-        return;
+      } else if (this.src.search('stop\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-times-circle');
+      } else if (this.src.search('red\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle', 'crimson');
+      } else if (this.src.search('red_anime\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle fa-blink', 'crimson');
+      } else if (this.src.search('(blue|green)\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle', 'mediumseagreen');
+      } else if (this.src.search('(blue|green)_anime\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle fa-blink', 'mediumseagreen');
+      } else if (this.src.search('(aborted|disabled|grey|nobuilt)\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle', 'lightslategrey');
+      } else if (this.src.search('(aborted|disabled|grey|nobuilt)_anime\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle fa-blink', 'lightslategrey');
+      } else if (this.src.search('yellow\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle', 'gold');
+      } else if (this.src.search('yellow_anime\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-circle fa-blink', 'gold');
       }
     });
   });

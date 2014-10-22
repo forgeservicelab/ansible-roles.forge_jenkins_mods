@@ -25,6 +25,18 @@
     group: jenkins
     mode: 0644
 
+- name: Ensure static assets exist
+  file:
+    path: /var/www/{{ item }}
+    owner: www-data
+    group: www-data
+    state: directory
+  with_items:
+     - fonts
+     - css
+     - js
+     - img
+
 - copy:
     src: forge.{{ item }}
     dest: /var/www/{{ item }}/
