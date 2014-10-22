@@ -396,6 +396,10 @@ Q( document ).ready(function() {
     Q(this).addClass('setting-input');
   });
 
+  Q('table', ('#side-panel-content')).each(function() {
+    Q(this).removeClass('stripped');
+  });
+
   Q("td[id='footer']").each(function (index) {
     if (index > 0) {
       Q(this).css('background-image','none');
@@ -450,7 +454,7 @@ Q( document ).ready(function() {
   });
 
   var queueObserver = new MutationObserver(function() {
-    Q('table',Q('#side-panel-content')).each(function() {
+    Q('table', ('#side-panel-content')).each(function() {
       Q(this).removeClass('stripped');
     });
 
@@ -507,7 +511,7 @@ Q( document ).ready(function() {
     });
   });
 
-  Q('#side-panel').each(function() {
+  Q('#side-panel-content').each(function() {
     queueObserver.observe(this, {
       subtree: true,
       childList: true
