@@ -395,7 +395,9 @@ Q( document ).ready(function() {
     this.disabled = true;
   });
   Q('span').each(function() {
-    this.innerHTML = unescapeHTML(this.innerHTML);
+    if (this.innerHTML.search('Started by') == 0) { 
+      this.innerHTML = unescapeHTML(this.innerHTML);
+    }
   });
 
   changeIcons();
@@ -435,6 +437,10 @@ Q( document ).ready(function() {
     Q('img', ('#buildQueue')).each(function () {
       if (this.src.search('collapse\.(png|gif)') > 0) {
         replaceImage(this, 'fa fa-minus');
+        return;
+      } else if (this.src.search('stop\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-times-circle');
+        return;
       } else {
         replaceImage(this, 'fa fa-plus');
       }
@@ -452,6 +458,9 @@ Q( document ).ready(function() {
         return;
       } else if (this.src.search('computer-x\.(png|gif)') > 0) {
         replaceImageWithStack(this, 'fa fa-desktop', 'fa fa-times', 'red');
+        return;
+      } else if (this.src.search('stop\.(png|gif)') > 0) {
+        replaceImage(this, 'fa fa-times-circle');
         return;
       } else {
         replaceImage(this, 'fa fa-plus');
