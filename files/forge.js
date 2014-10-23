@@ -348,7 +348,7 @@ function changeIcons() {
 }
 
 function linkId (string) {
-  return string.replace(/(\#)(\d+)/, '<a href="https://support.forgeservicelab.fi/redmine/issues/$2">$1$2</a>');
+  return string.replace(/(\#)(\d+)/g, '<a href="https://support.forgeservicelab.fi/redmine/issues/$2">$1$2</a>');
 }
 
 function unescapeHTML (string) {
@@ -425,7 +425,7 @@ Q( document ).ready(function() {
 
   changeIcons();
   linkIssues();
-  linkURLs();
+//  linkURLs();
 
   var validationObserver = new MutationObserver(function() {
     Q(".warning", ".validation-error-area").each(function() {
