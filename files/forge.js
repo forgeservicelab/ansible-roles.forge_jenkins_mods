@@ -302,6 +302,19 @@ function changeIcons() {
         Q(stacked[0]).css('top', '-20%');
         Q(stacked[0]).css('left', '15%');
       }
+      if (stacked[0].parentNode.parentNode.parentNode.nodeName == 'TD' &&
+                 stacked[0].parentNode.parentNode.hasAttribute('href') &&
+                 stacked[0].parentNode.parentNode.href.search('selenium/conf') >= 0) {
+        Q(stacked[0].parentNode).removeClass('fa-4x');
+        Q(stacked[0].parentNode).removeClass('fa-lg');
+        Q(stacked[0].parentNode).addClass('fa-2x');
+        Q(stacked[0].parentNode).css('margin-top', '5px');
+        Q(stacked).each(function() {
+                Q(this).css('font-size', '');
+        });
+        Q(stacked[0]).css('top', '-20%');
+        Q(stacked[0]).css('left', '20%');
+      }
       Q(stacked[1]).removeClass('fa-stack-1x');
       Q(stacked[1]).addClass('fa-stack-2x');
       Q(stacked[1]).css('text-align', 'start');
