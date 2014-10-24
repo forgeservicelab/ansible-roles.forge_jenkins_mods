@@ -152,6 +152,10 @@ a.sortheader {
 	background-size: 500px;
 }
 
+#management-links tr td {
+  padding-left: 5px;
+  padding-right: 5px;
+}
 @-webkit-keyframes blink {
 	0% {
 		opacity:1;
