@@ -99,8 +99,9 @@ a:visited {
 	box-shadow: inset 0px 1px 6px 2px #0b1800;
 }
 
-#search-box {
-	background: white url('/img/search.png') no-repeat 2px center;
+#search-box, #filter-box {
+	background: white url('/img/search.png') no-repeat 2px center !important;
+  border: 1px solid #DDD;
 	border-radius: 0;
 	box-shadow: none;
 }
