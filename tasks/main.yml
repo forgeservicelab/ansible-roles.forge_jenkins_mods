@@ -60,7 +60,7 @@
     dest: /var/www/fonts/
   with_items:
     - font-awesome-4.1.0.zip
-    - 170413.zip
+#    - 170413.zip # Please see files/170413.zip.readme for more info
 
 - unarchive:
     src: Drupal_cs.tgz
