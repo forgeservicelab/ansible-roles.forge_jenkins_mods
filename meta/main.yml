@@ -2,7 +2,7 @@
 galaxy_info:
   author: Jorge Rodriguez
   description: FORGE Service Lab modifications to Jenkins
-  company: Digile Oy
-  license: GPLv3
+  company: DIGILE LTd.
+  license: MIT
   min_ansible_version: 1.8
 dependencies: []
